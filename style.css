@@ -1,24 +1,25 @@
 /* === PREMIUM CORPORATE STYLE (Sber/VTB inspired) === */
 
 :root {
-    --primary: #0066FF;
-    --primary-dark: #0052CC;
-    --primary-light: #E6F0FF;
-    --dark: #1A1A1A;
-    --dark-secondary: #2D2D2D;
-    --gray-900: #1F2937;
-    --gray-700: #374151;
-    --gray-500: #6B7280;
-    --gray-300: #D1D5DB;
-    --gray-100: #F3F4F6;
-    --gray-50: #F9FAFB;
+    /* VTB Style Colors */
+    --primary: #0047BB;
+    --primary-dark: #002882;
+    --primary-light: #E8F0FE;
+    --dark: #0A1628;
+    --dark-secondary: #1A2A44;
+    --gray-900: #1C2331;
+    --gray-700: #4A5568;
+    --gray-500: #718096;
+    --gray-300: #CBD5E0;
+    --gray-100: #EDF2F7;
+    --gray-50: #F7FAFC;
     --white: #FFFFFF;
-    --accent: #00C853;
-    --radius: 16px;
-    --radius-sm: 8px;
-    --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.12);
-    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --accent: #00A3E0;
+    --radius: 12px;
+    --radius-sm: 6px;
+    --shadow: 0 4px 20px rgba(0, 40, 130, 0.08);
+    --shadow-lg: 0 12px 40px rgba(0, 40, 130, 0.12);
+    --transition: all 0.2s ease;
 }
 
 *, *::before, *::after {
@@ -75,7 +76,7 @@ body {
 .btn-primary:hover {
     background: var(--primary-dark);
     transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(0, 102, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 71, 187, 0.3);
 }
 
 .btn-ghost {
@@ -378,12 +379,13 @@ body {
 }
 
 .service-card--featured .service-card-icon {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .service-card--featured .service-card-icon svg {
-    stroke: var(--white);
+    stroke: var(--primary);
 }
+
 
 .service-card--accent {
     background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
@@ -396,11 +398,15 @@ body {
 }
 
 .service-card--accent .service-card-icon {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--primary);
 }
 
 .service-card--accent .service-card-icon svg {
     stroke: var(--white);
+}
+
+.service-card--accent p {
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .service-card-icon {
@@ -429,7 +435,7 @@ body {
 
 .service-card p {
     font-size: 15px;
-    color: var(--gray-500);
+    color: var(--gray-700);
     line-height: 1.6;
     flex-grow: 1;
 }
@@ -490,7 +496,7 @@ body {
 
 .geo-card p {
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.85);
     margin-bottom: 16px;
 }
 
@@ -501,8 +507,8 @@ body {
 
 .geo-meta span {
     font-size: 13px;
-    color: var(--primary);
-    background: rgba(0, 102, 255, 0.15);
+    color: var(--accent);
+    background: rgba(0, 163, 224, 0.2);
     padding: 6px 12px;
     border-radius: 100px;
 }
@@ -622,7 +628,7 @@ body {
 .cta-form input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(0, 71, 187, 0.15);
 }
 
 .cta-form button {
