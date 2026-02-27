@@ -487,22 +487,29 @@
     <script src="https://api-maps.yandex.ru/2.1/?apikey=6fc7872f-fdc8-4aa0-99fb-1f36dd5f5264&lang=ru_RU" type="text/javascript"></script>
     <script>
         ymaps.ready(function () {
-            var map = new ymaps.Map('yandex-map', {
-                center: [59.865700, 30.318600],
-                zoom: 16,
-                controls: ['zoomControl', 'fullscreenControl']
-            });
+            var address = 'Санкт-Петербург, ул. Бассейная, д. 21';
 
-            var placemark = new ymaps.Placemark([59.865700, 30.318600], {
-                balloonContent: '<strong>Customs Consulting</strong><br>ул. Бассейная, д. 21, офис 701<br>Санкт-Петербург',
-                hintContent: 'Customs Consulting'
-            }, {
-                preset: 'islands#greenDotIconWithCaption',
-                iconCaptionMaxWidth: '200'
-            });
+            ymaps.geocode(address, { results: 1 }).then(function (res) {
+                var firstGeoObject = res.geoObjects.get(0);
+                var coords = firstGeoObject.geometry.getCoordinates();
 
-            map.geoObjects.add(placemark);
-            placemark.balloon.open();
+                var map = new ymaps.Map('yandex-map', {
+                    center: coords,
+                    zoom: 17,
+                    controls: ['zoomControl', 'fullscreenControl']
+                });
+
+                var placemark = new ymaps.Placemark(coords, {
+                    balloonContent: '<strong>Customs Consulting</strong><br>ул. Бассейная, д. 21, офис 701<br>Санкт-Петербург',
+                    hintContent: 'Customs Consulting'
+                }, {
+                    preset: 'islands#greenDotIconWithCaption',
+                    iconCaptionMaxWidth: '200'
+                });
+
+                map.geoObjects.add(placemark);
+                placemark.balloon.open();
+            });
         });
     </script>
 </body>
