@@ -63,31 +63,33 @@ $headers[] = 'X-Mailer: PHP/' . phpversion();
 $mail_sent = mail($to_email, $subject, $email_body, implode("\r\n", $headers));
 
 // Отправка лида в Битрикс24
-$bitrix_webhook = 'https://alliance-llc.bitrix24.ru/rest/7/n6w82j1vghsl72sb/crm.lead.add';
+$bitrix_webhook = getenv('BITRIX24_WEBHOOK_URL');
 
-$lead_fields = [
-    'TITLE'              => 'Заявка с сайта customs-consulting.ru — ' . $name,
-    'NAME'               => $name,
-    'SOURCE_ID'          => 'WEB',
-    'SOURCE_DESCRIPTION' => 'Заявка с сайта customs-consulting.ru',
-    'COMMENTS'           => (!empty($message) ? $message : 'Запрос на обратный звонок'),
-];
+if ($bitrix_webhook) {
+    $lead_fields = [
+        'TITLE'              => 'Заявка с сайта customs-consulting.ru — ' . $name,
+        'NAME'               => $name,
+        'SOURCE_ID'          => 'WEB',
+        'SOURCE_DESCRIPTION' => 'Заявка с сайта customs-consulting.ru',
+        'COMMENTS'           => (!empty($message) ? $message : 'Запрос на обратный звонок'),
+    ];
 
-if (!empty($phone)) {
-    $lead_fields['PHONE'] = [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
+    if (!empty($phone)) {
+        $lead_fields['PHONE'] = [['VALUE' => $phone, 'VALUE_TYPE' => 'WORK']];
+    }
+    if (!empty($email)) {
+        $lead_fields['EMAIL'] = [['VALUE' => $email, 'VALUE_TYPE' => 'WORK']];
+    }
+
+    $ch = curl_init($bitrix_webhook);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['fields' => $lead_fields]));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_exec($ch);
+    curl_close($ch);
 }
-if (!empty($email)) {
-    $lead_fields['EMAIL'] = [['VALUE' => $email, 'VALUE_TYPE' => 'WORK']];
-}
-
-$ch = curl_init($bitrix_webhook);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['fields' => $lead_fields]));
-curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-curl_exec($ch);
-curl_close($ch);
 
 // Ответ
 header('Content-Type: application/json; charset=utf-8');
